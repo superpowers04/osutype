@@ -1,5 +1,5 @@
 const { SliderInput } = require('powercord/components/settings');
-
+const { React } = require('powercord/webpack');
 module.exports = class Settings extends React.PureComponent {
   render () {
     return (
