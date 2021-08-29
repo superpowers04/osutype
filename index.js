@@ -1,5 +1,5 @@
 const { Plugin } = require('powercord/entities');
-const Settings = require('./components/Settings');
+const Settings = require('./component/Settings');
 const { React } = require('powercord/webpack');
 module.exports = class OsuTyping extends Plugin {
     startPlugin() {
