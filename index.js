@@ -30,15 +30,11 @@ module.exports = class OsuTyping extends Plugin {
     }
     keyDown(e) {
         //seek the audio element to 0 seconds and play it
-        if (this.allowedKeys.contains(e.key)) {
+        if (validKeycodes.includes(e.keyCode)) {
         document.getElementById("osutype").currentTime = 0;
         document.getElementById("osutype").play();
         }
     }
-    get allowedKeys() {
-        return validKeycodes;
-    }
-
 };
 
 const validKeycodes = [
