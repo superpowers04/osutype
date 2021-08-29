@@ -9,7 +9,7 @@ module.exports = class Settings extends React.PureComponent {
             maxValue={100}
             value={this.props.getSetting('volume', 100)}
             onChange={(value) => {this.props.updateSetting('volume', value);
-        document.getElementById('volume').volume = value / 100;}}
+        document.getElementById('osutype').volume = value / 100;}}
         >
             Volume
         </SliderInput>
