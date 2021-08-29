@@ -8,7 +8,7 @@ module.exports = class OsuTyping extends Plugin {
         audio.src = "https://github.com/happyori/OsuTyping/raw/master/menuclick.wav";
         audio.id = "osutype";
         audio.setAttribute("style", "display: none;");
-        audio.volume = this.settings.getElementById("volume", 100)/100;
+        audio.volume = this.settings.get("volume", 100)/100;
         document.body.appendChild(audio);
         document.addEventListener("keydown", this.keyDown)
         powercord.api.settings.registerSettings(
