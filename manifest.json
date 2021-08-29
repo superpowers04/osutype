@@ -1,7 +1,7 @@
 {
     "name": "OsuType",
     "version": "1.0.0",
-    "description": "Uses the PC Plugin Template by jai#0001",
+    "description": "plays osu typing sounds when you type",
     "author": "jai#0001",
     "license": "DBAD"
 }
