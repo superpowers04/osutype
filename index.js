@@ -1,15 +1,42 @@
 const { Plugin } = require('powercord/entities');
 const Settings = require('./component/Settings');
 const { React } = require('powercord/webpack');
+var typingAudio = {};
+var currentAudio;
 module.exports = class OsuTyping extends Plugin {
     startPlugin() {
-        //add an audio element to the page root
-        const audio = document.createElement("audio");
-        audio.src = "https://github.com/happyori/OsuTyping/raw/master/menuclick.wav";
-        audio.id = "osutype";
-        audio.setAttribute("style", "display: none;");
-        audio.volume = this.settings.get("volume", 100)/100;
-        document.body.appendChild(audio);
+        // Reset main array of audio elements
+        typingAudio = {};
+
+        // Create all audio elements
+        typingAudio[0] = document.createElement("audio");
+        typingAudio[0].src = "https://github.com/ppy/osu-resources/raw/master/osu.Game.Resources/Samples/Keyboard/key-press-1.mp3";
+        typingAudio[0].id = "normalType";
+
+        typingAudio[1] = document.createElement("audio");
+        typingAudio[1].src = "https://github.com/ppy/osu-resources/raw/master/osu.Game.Resources/Samples/Keyboard/key-delete.mp3";
+        typingAudio[1].id = "bkSp";
+
+        typingAudio[2] = document.createElement("audio");
+        typingAudio[2].src = "https://github.com/ppy/osu-resources/raw/master/osu.Game.Resources/Samples/Keyboard/key-confirm.mp3";
+        typingAudio[2].id = "ret";
+
+        typingAudio[3] = document.createElement("audio");
+        typingAudio[3].src = "https://github.com/ppy/osu-resources/raw/master/osu.Game.Resources/Samples/Keyboard/key-movement.mp3";
+        typingAudio[3].id = "ret";
+
+        typingAudio[4] = document.createElement("audio");
+        typingAudio[4].src = "https://github.com/ppy/osu-resources/raw/master/osu.Game.Resources/Samples/Keyboard/key-caps.mp3";
+        typingAudio[4].id = "ret";
+
+
+        // Append audio elements to document
+        for (var i = typingAudio.length - 1; i >= 0; i--) {
+            typingAudio[i].setAttribute("style", "display: none;");
+            typingAudio[i] = this.settings.get("volume", 100)/100;
+            document.body.appendChild(typingAudio[i]);
+        }
+        
         document.addEventListener("keydown", this.keyDown)
         powercord.api.settings.registerSettings(
             this.entityID,
@@ -22,8 +49,13 @@ module.exports = class OsuTyping extends Plugin {
         )
     }
     pluginWillUnload() {
-        //remove the audio element from the page root
-        document.body.removeChild(document.getElementById("osutype"));
+        //remove all audio elements from the page root
+        for (var i = typingAudio.length - 1; i >= 0; i--) {
+            document.body.removeChild(typingAudio[i].id);
+        }
+        typingAudio = null;
+        currentAudio = null;
+        
         document.removeEventListener("keydown", this.keyDown);
         powercord.api.settings.unregisterSettings(this.entityID);
 
@@ -31,12 +63,32 @@ module.exports = class OsuTyping extends Plugin {
     keyDown(e) {
         //seek the audio element to 0 seconds and play it
         if (validKeycodes.includes(e.keyCode)) {
-        document.getElementById("osutype").currentTime = 0;
-        document.getElementById("osutype").play();
+            switch (e.keyCode){
+                case 37: // Left 
+                case 38: // Up
+                case 39: // Right
+                case 40: // Down
+                    currentAudio = typingAudio[3];
+                    break;
+                case 20: // Caps
+                    currentAudio = typingAudio[4];
+                    break;
+                case 13: // Return
+                    currentAudio = typingAudio[2];
+                    break;
+                case 8: // Backspace
+                    currentAudio = typingAudio[1];
+                    break;
+                default:
+                    currentAudio = typingAudio[0];
+                    break;
+            }
+            // console.log(e.keyCode)
+            currentAudio.currentTime = 0;
+            currentAudio.play();
         }
     }
 };
-
 const validKeycodes = [
     8,
     9,
