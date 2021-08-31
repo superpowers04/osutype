@@ -9,9 +9,19 @@ module.exports = class OsuTyping extends Plugin {
         typingAudio = {};
 
         // Create all audio elements
-        typingAudio[0] = document.createElement("audio");
-        typingAudio[0].src = "https://github.com/ppy/osu-resources/raw/master/osu.Game.Resources/Samples/Keyboard/key-press-1.mp3";
-        typingAudio[0].id = "normalType";
+        typingAudio[0] = {};
+        typingAudio[0][0] = document.createElement("audio");
+        typingAudio[0][0].src = "https://github.com/ppy/osu-resources/raw/master/osu.Game.Resources/Samples/Keyboard/key-press-1.mp3";
+        typingAudio[0][0].id = "normalType1";
+        typingAudio[0][1] = document.createElement("audio");
+        typingAudio[0][1].src = "https://github.com/ppy/osu-resources/raw/master/osu.Game.Resources/Samples/Keyboard/key-press-2.mp3";
+        typingAudio[0][1].id = "normalType2";
+        typingAudio[0][2] = document.createElement("audio");
+        typingAudio[0][2].src = "https://github.com/ppy/osu-resources/raw/master/osu.Game.Resources/Samples/Keyboard/key-press-3.mp3";
+        typingAudio[0][2].id = "normalType3";
+        typingAudio[0][3] = document.createElement("audio");
+        typingAudio[0][3].src = "https://github.com/ppy/osu-resources/raw/master/osu.Game.Resources/Samples/Keyboard/key-press-4.mp3";
+        typingAudio[0][3].id = "normalType4";
 
         typingAudio[1] = document.createElement("audio");
         typingAudio[1].src = "https://github.com/ppy/osu-resources/raw/master/osu.Game.Resources/Samples/Keyboard/key-delete.mp3";
@@ -80,7 +90,7 @@ module.exports = class OsuTyping extends Plugin {
                     currentAudio = typingAudio[1];
                     break;
                 default:
-                    currentAudio = typingAudio[0];
+                    currentAudio = typingAudio[0][Math.floor(Math.random() * 4)];
                     break;
             }
             // console.log(e.keyCode)
